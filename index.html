@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            /* // background-color; */
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        } 
+        .content{
+            min-width: 280px;
+            min-height: 100px;
+            display: flex;
+            align-items: normal;
+            justify-content: space-around;
+            flex-direction: column;
+        }
+
+    </style>
+</head>
+<body >
+
+    <div class="container">
+
+        <div class="content">
+            <div>
+                <h4 ><a id="url"  target="_blank" rel="noopener noreferrer"></a></h4>
+                <h4 id="bio"></h4>
+                
+                <img id = "image" src= "" alt="">
+
+
+
+            </div>
+
+
+
+            <h3>buscador github</h3>
+            <input type="text" id="user" placeholder="user">
+    
+            <button onclick="Buscar()">Buscar</button>
+        </div>
+    </div>
+
+    <script>
+        function Buscar(){
+            var ereal= document.getElementById('user').value
+            
+            fetch(`https://api.github.com/users/${ereal}`)
+            .then(function (response) {
+                return response.json();
+    
+            })
+
+            .then(function (data) {
+                document.getElementById('bio').innerHTML=data.bio
+                document.getElementById('url').innerHTML=data.html_url
+                document.getElementById('url').href=data.html_url
+                document.getElementById('image').src=data.avatar_url
+            })
+            .catch(function (err) {
+                console.log("Something went wrong!", err);
+            });
+        }
+    </script>
+</body>
+</html>
+
